@@ -3,9 +3,35 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{41D20F8F-147F-43BE-AE07-50DEBDAD8360}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{DE2670CF-A51E-445B-97EA-467D6C1E0BCB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAI.Tests", "tests\OpenAI.Tests\OpenAI.Tests.csproj", "{C0655560-C303-491C-8331-EE9F4DFDD678}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAI.Net", "src\OpenAI.Net\OpenAI.Net.csproj", "{9D297C9B-8A7F-4337-B398-706999A67923}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0655560-C303-491C-8331-EE9F4DFDD678}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0655560-C303-491C-8331-EE9F4DFDD678}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0655560-C303-491C-8331-EE9F4DFDD678}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0655560-C303-491C-8331-EE9F4DFDD678}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D297C9B-8A7F-4337-B398-706999A67923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D297C9B-8A7F-4337-B398-706999A67923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D297C9B-8A7F-4337-B398-706999A67923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D297C9B-8A7F-4337-B398-706999A67923}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C0655560-C303-491C-8331-EE9F4DFDD678} = {DE2670CF-A51E-445B-97EA-467D6C1E0BCB}
+		{9D297C9B-8A7F-4337-B398-706999A67923} = {41D20F8F-147F-43BE-AE07-50DEBDAD8360}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0EC7C89-5FDE-4012-9906-91792679A629}
