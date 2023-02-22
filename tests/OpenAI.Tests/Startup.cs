@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using OpenAI.Net;
 using OpenAI.Net.Interfaces;
 using OpenAI.Net.Services;
 using System;
@@ -11,10 +14,17 @@ namespace OpenAI.Tests
 {
     public class Startup
     {
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services,HostBuilderContext context)
         {
-            services.AddHttpClient();
-            services.AddTransient<IModelService, ModelService>();
+            services.AddOpenAI(context.Configuration.GetSection("OpenAIOptions"));
         }
+
+        public void ConfigureHost(IHostBuilder hostBuilder) =>
+        hostBuilder
+            .ConfigureHostConfiguration(builder => 
+            {
+                builder.AddUserSecrets(typeof(Startup).Assembly);
+                builder.AddJsonFile("appsettings.json", true); 
+            });
     }
 }
