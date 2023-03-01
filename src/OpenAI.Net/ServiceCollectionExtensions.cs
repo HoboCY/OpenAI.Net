@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OpenAI.Net.Interfaces;
-using OpenAI.Net.Services;
 
 namespace OpenAI.Net
 {
@@ -12,7 +10,7 @@ namespace OpenAI.Net
             services.AddHttpClient("OpenAI");
 
             services.Configure<OpenAIOptions>(section);
-            services.AddTransient<IModelService, ModelService>();
+            services.AddTransient<OpenAIClient>();
 
             return services;
         }
