@@ -10,20 +10,12 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  publish:
+    name: build, pack & publish
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.201
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
+    # Publish
     - name: Publish
       uses: brandedoutcast/publish-nuget@v2
       with:
