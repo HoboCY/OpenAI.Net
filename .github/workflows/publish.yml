@@ -22,4 +22,4 @@ jobs:
     - name: Package
       run: dotnet pack -c Release -o . OpenAI.Net.csproj
     - name: Publish
-      run: dotnet nuget push *.nupkg -k oy2acsczghrilfl527baw2ofeyrm4dxedifahjace4ftqe -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push *.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
