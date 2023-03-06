@@ -15,7 +15,7 @@
     <Authors>HoboCY</Authors>
     <RepositoryUrl>https://github.com/HoboCY/OpenAI.Net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <Version>$(AssemblyVersion)</Version>
     <PackageTags>machine-learning, sdk, ml, openai, gpt-3, gpt3,gpt3.5, gpt3-library, chatgpt</PackageTags>
