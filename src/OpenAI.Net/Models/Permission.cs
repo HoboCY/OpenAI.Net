@@ -1,7 +1,5 @@
 ﻿using OpenAI.Net.JsonConverts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace OpenAI.Net.Models
@@ -35,7 +33,7 @@ namespace OpenAI.Net.Models
 
         public string Organization { get; set; }
 
-        public string? Group { get; set; }
+        public string Group { get; set; }
 
         [JsonPropertyName("is_blocking")]
         public bool IsBlocking { get; set; }

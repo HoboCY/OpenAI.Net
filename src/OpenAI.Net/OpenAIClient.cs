@@ -26,7 +26,7 @@ namespace OpenAI.Net
         public async Task<List<Model>> GetModelsAsync()
         {
             var apiResult = await GetAsync<ApiResult>(ModelApiEndPoint);
-            return apiResult!.Data;
+            return apiResult.Data;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace OpenAI.Net
         public async Task<Model> GetModelAsync(string id)
         {
             var model = await GetAsync<Model>($"{ModelApiEndPoint}/{id}");
-            return model!;
+            return model;
         }
 
         /// <summary>
@@ -54,44 +54,52 @@ namespace OpenAI.Net
         private HttpClient GetClient()
         {
             var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _openAIOptions.ApiSecretKey);
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _openAIOptions.ApiSecretKey);
 
             return client;
         }
 
         private async Task<T> GetAsync<T>(string url)
         {
-            using var client = GetClient();
-            using var response = await client.GetAsync(url);
-
-            if (response.IsSuccessStatusCode)
+            using (var client = GetClient())
             {
-                return (await response.Content.ReadFromJsonAsync<T>())!;
+                using (var response = await client.GetAsync(url))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return (await response.Content.ReadFromJsonAsync<T>());
+                    }
+
+                    var error = await response.Content.ReadFromJsonAsync<ErrorResult>();
+                    throw new HttpRequestException(error.Error.Message);
+                }
             }
-
-            var error = await response.Content.ReadFromJsonAsync<ErrorResult>()!;
-
-            throw new HttpRequestException(error!.Error.Message);
         }
 
-        private async Task<TResponse> PostAsync<TRequest, TResponse>(string url, TRequest request) where TRequest : class, new()
+        private async Task<TResponse> PostAsync<TRequest, TResponse>(string url, TRequest request)
+            where TRequest : class, new()
             where TResponse : class
         {
-            using var client = GetClient();
-            using var response = await client.PostAsJsonAsync(url, request,new JsonSerializerOptions
+            using (var client = GetClient())
             {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-            });
+                var jsonSerializerOptions = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+                };
+                using (var response = await client.PostAsJsonAsync(url, request, jsonSerializerOptions))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return (await response.Content.ReadFromJsonAsync<TResponse>());
+                    }
 
-            if (response.IsSuccessStatusCode)
-            {
-                return (await response.Content.ReadFromJsonAsync<TResponse>())!;
+                    var error = await response.Content.ReadFromJsonAsync<ErrorResult>();
+
+                    throw new HttpRequestException(error.Error.Message);
+                }
             }
-
-            var error = await response.Content.ReadFromJsonAsync<ErrorResult>()!;
-
-            throw new HttpRequestException(error!.Error.Message);
         }
     }
 }
