@@ -26,7 +26,7 @@ namespace OpenAI.Net.Completions
         /// <summary>
         /// The suffix that comes after a completion of inserted text.
         /// </summary>
-        public string? Suffix { get; set; }
+        public string Suffix { get; set; }
 
         /// <summary>
         /// The maximum number of <see href="https://platform.openai.com/tokenizer">tokens</see> to generate in the completion.
@@ -81,7 +81,7 @@ namespace OpenAI.Net.Completions
         /// <summary>
         /// Up to 4 sequences where the API will stop generating further tokens. The returned text will not contain the stop sequence.
         /// </summary>
-        public string? Stop { get; set; }
+        public string Stop { get; set; }
 
         /// <summary>
         /// Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far,
@@ -118,7 +118,7 @@ namespace OpenAI.Net.Completions
         /// values like -100 or 100 should result in a ban or exclusive selection of the relevant token.
         /// </summary>
         [JsonPropertyName("logit_bias")]
-        public JsonObject? LogitBias { get; set; }
+        public JsonObject LogitBias { get; set; }
 
         /// <summary>
         /// A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. <see href="https://platform.openai.com/docs/guides/safety-best-practices/end-user-ids">Learn more</see>.

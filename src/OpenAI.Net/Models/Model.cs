@@ -1,7 +1,6 @@
 ﻿using OpenAI.Net.JsonConverts;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace OpenAI.Net.Models
@@ -22,6 +21,6 @@ namespace OpenAI.Net.Models
 
         public string Root { get; set; }
 
-        public string? Parent { get; set; }
+        public string Parent { get; set; }
     }
 }
