@@ -13,7 +13,6 @@
     <Description>OpenAI API client library for .NET and .NETCore. This is not an official library, developed for public use.</Description>
     <PackageProjectUrl>https://github.com/HoboCY/OpenAI.Net</PackageProjectUrl>
     <Authors>HoboCY</Authors>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/HoboCY/OpenAI.Net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AssemblyVersion>1.0.0</AssemblyVersion>
