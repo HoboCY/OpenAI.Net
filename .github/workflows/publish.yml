@@ -5,16 +5,11 @@ on:
     branches: [ publish ]
 jobs:
   build:
-    runs-on: windows-2019
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./src/OpenAI.Net
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET461
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 4.6.1
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
