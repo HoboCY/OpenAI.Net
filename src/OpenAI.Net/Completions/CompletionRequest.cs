@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
@@ -22,7 +21,7 @@ namespace OpenAI.Net.Completions
         /// Note that endoftext is the document separator that the model sees during training,
         /// so if a prompt is not specified the model will generate as if from the beginning of a new document.
         /// </summary>
-        public string Prompt { get; set; } = string.Empty;
+        public string[] Prompt { get; set; } = Array.Empty<string>();
 
         /// <summary>
         /// The suffix that comes after a completion of inserted text.

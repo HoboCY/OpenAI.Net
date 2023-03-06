@@ -22,7 +22,7 @@ namespace OpenAI.Tests
         {
             var completion = await _openAIClient.CreateCompletionAsync(new CompletionRequest()
             {
-                Prompt = "Say this is a test",
+                Prompt = new[]{"Say this is a test"},
                 Model = "text-davinci-003",
                 MaxTokens = 50,
                 Temperature = 0,
