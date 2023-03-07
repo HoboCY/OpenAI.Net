@@ -4,9 +4,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.Http.Json;
 using Microsoft.Extensions.Options;
-using OpenAI.Net.Completions;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using OpenAI.Net.TextCompletions;
 
 namespace OpenAI.Net
 {
@@ -45,15 +45,15 @@ namespace OpenAI.Net
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<CompletionRespnse> CreateCompletionAsync(CompletionRequest request)
+        public async Task<CompletionResponse> CreateCompletionAsync(CompletionRequest request)
         {
-            var completionResponse = await PostAsync<CompletionRequest, CompletionRespnse>(CompletionEndPoint, request);
+            var completionResponse = await PostAsync<CompletionRequest, CompletionResponse>(CompletionEndPoint, request);
             return completionResponse;
         }
 
         private HttpClient GetClient()
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("OpenAI");
             client.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _openAIOptions.ApiSecretKey);
 

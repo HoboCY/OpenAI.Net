@@ -1,10 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace OpenAI.Net.Completions
+namespace OpenAI.Net
 {
     public class Choice
     {
         public string Text { get; set; } = string.Empty;
+        
         public int Index { get; set; }
 
         public object Logprobs { get; set; }

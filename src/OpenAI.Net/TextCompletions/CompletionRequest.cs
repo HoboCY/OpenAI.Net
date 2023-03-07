@@ -2,7 +2,7 @@
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
-namespace OpenAI.Net.Completions
+namespace OpenAI.Net.TextCompletions
 {
     /// <summary>
     /// Creates a completion for the provided prompt and parameters

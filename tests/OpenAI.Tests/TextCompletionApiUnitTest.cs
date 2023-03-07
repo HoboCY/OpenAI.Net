@@ -1,26 +1,21 @@
 ﻿using OpenAI.Net;
-using OpenAI.Net.Completions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OpenAI.Net.TextCompletions;
 
 namespace OpenAI.Tests
 {
-    public class CompletionApiUnitTest
+    public class TextCompletionApiUnitTest
     {
-        private readonly OpenAIClient _openAIClient;
+        private readonly OpenAIClient _openAiClient;
 
-        public CompletionApiUnitTest(OpenAIClient openAIClient)
+        public TextCompletionApiUnitTest(OpenAIClient openAiClient)
         {
-            _openAIClient = openAIClient;
+            _openAiClient = openAiClient;
         }
 
         [Fact]
         public async Task Completion_Request_Should_Be_Success()
         {
-            var completion = await _openAIClient.CreateCompletionAsync(new CompletionRequest()
+            var completion = await _openAiClient.CreateCompletionAsync(new CompletionRequest()
             {
                 Prompt = new[]{"Say this is a test"},
                 Model = "text-davinci-003",
