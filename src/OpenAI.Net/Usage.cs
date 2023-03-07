@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace OpenAI.Net.Completions
+namespace OpenAI.Net
 {
     public class Usage
     {

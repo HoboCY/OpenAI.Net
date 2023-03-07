@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace OpenAI.Net.Completions
+namespace OpenAI.Net.TextCompletions
 {
-    public class CompletionRespnse
+    public class CompletionResponse
     {
         public string Id { get; set; } = string.Empty;
 
