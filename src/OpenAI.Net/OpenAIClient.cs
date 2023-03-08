@@ -6,26 +6,28 @@ using System.Net.Http.Json;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using OpenAI.Net.TextCompletions;
+using OpenAI.Net.Completions;
+using OpenAI.Net.Completions.ChatCompletions;
+using OpenAI.Net.Completions.TextCompletions;
 
 namespace OpenAI.Net
 {
     public class OpenAIClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private const string BaseUrl = "https://api.openai.com";
         private const string ModelApiEndPoint = "https://api.openai.com/v1/models";
-        private const string CompletionEndPoint = "https://api.openai.com/v1/completions";
-        private readonly OpenAIOptions _openAIOptions;
+        private readonly OpenAIOptions _openAiOptions;
 
         public OpenAIClient(IHttpClientFactory httpClientFactory, IOptions<OpenAIOptions> options)
         {
             _httpClientFactory = httpClientFactory;
-            _openAIOptions = options.Value;
+            _openAiOptions = options.Value;
         }
 
         public async Task<List<Model>> GetModelsAsync()
         {
-            var apiResult = await GetAsync<ApiResult>(ModelApiEndPoint);
+            var apiResult = await GetAsync<ModelResponse>(ModelApiEndPoint);
             return apiResult.Data;
         }
 
@@ -45,17 +47,29 @@ namespace OpenAI.Net
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<CompletionResponse> CreateCompletionAsync(CompletionRequest request)
+        public async Task<TextCompletionResponse> CreateTextCompletionAsync(TextCompletionRequest request)
         {
-            var completionResponse = await PostAsync<CompletionRequest, CompletionResponse>(CompletionEndPoint, request);
+            var completionResponse =
+                await PostAsync<TextCompletionRequest, TextCompletionResponse>(request);
             return completionResponse;
+        }
+
+        /// <summary>
+        /// Creates a completion for the chat message
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<ChatCompletionResponse> CreateChatCompletionAsync(ChatCompletionRequest request)
+        {
+            var chatCompletionResponse = await PostAsync<ChatCompletionRequest, ChatCompletionResponse>(request);
+            return chatCompletionResponse;
         }
 
         private HttpClient GetClient()
         {
             var client = _httpClientFactory.CreateClient("OpenAI");
             client.DefaultRequestHeaders.Authorization =
-                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _openAIOptions.ApiSecretKey);
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _openAiOptions.ApiSecretKey);
 
             return client;
         }
@@ -68,18 +82,17 @@ namespace OpenAI.Net
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        return (await response.Content.ReadFromJsonAsync<T>());
+                        return await response.Content.ReadFromJsonAsync<T>().ConfigureAwait(false);
                     }
 
-                    var error = await response.Content.ReadFromJsonAsync<ErrorResult>();
+                    var error = await response.Content.ReadFromJsonAsync<ErrorResult>().ConfigureAwait(false);
                     throw new HttpRequestException(error.Error.Message);
                 }
             }
         }
 
-        private async Task<TResponse> PostAsync<TRequest, TResponse>(string url, TRequest request)
-            where TRequest : class, new()
-            where TResponse : class
+        private async Task<TResponse> PostAsync<TRequest, TResponse>(TRequest request)
+            where TRequest : BaseRequest
         {
             using (var client = GetClient())
             {
@@ -88,14 +101,17 @@ namespace OpenAI.Net
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
                 };
-                using (var response = await client.PostAsJsonAsync(url, request, jsonSerializerOptions))
+
+                using (var response =
+                       await client.PostAsJsonAsync($"{BaseUrl}{request.GetEndPoint()}", request, jsonSerializerOptions)
+                           .ConfigureAwait(false))
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        return (await response.Content.ReadFromJsonAsync<TResponse>());
+                        return await response.Content.ReadFromJsonAsync<TResponse>().ConfigureAwait(false);
                     }
 
-                    var error = await response.Content.ReadFromJsonAsync<ErrorResult>();
+                    var error = await response.Content.ReadFromJsonAsync<ErrorResult>().ConfigureAwait(false);
 
                     throw new HttpRequestException(error.Error.Message);
                 }

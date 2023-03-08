@@ -1,5 +1,5 @@
 ﻿using OpenAI.Net;
-using OpenAI.Net.TextCompletions;
+using OpenAI.Net.Completions.TextCompletions;
 
 namespace OpenAI.Tests
 {
@@ -15,14 +15,10 @@ namespace OpenAI.Tests
         [Fact]
         public async Task Completion_Request_Should_Be_Success()
         {
-            var completion = await _openAiClient.CreateCompletionAsync(new CompletionRequest()
+            var completion = await _openAiClient.CreateTextCompletionAsync(new TextCompletionRequest()
             {
                 Prompt = new[]{"Say this is a test"},
-                Model = "text-davinci-003",
-                MaxTokens = 50,
-                Temperature = 0,
-                TopP = 1,
-                N = 1
+                Model = "text-davinci-003"
             });
 
             Assert.True(completion.Choices.Any());

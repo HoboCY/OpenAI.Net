@@ -1,11 +1,11 @@
-﻿using OpenAI.Net.JsonConverts;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using OpenAI.Net.JsonConverts;
 
-namespace OpenAI.Net.TextCompletions
+namespace OpenAI.Net.Completions
 {
-    public class CompletionResponse
+    public abstract class BaseResponse<T> where T : BaseChoice
     {
         public string Id { get; set; } = string.Empty;
 
@@ -15,10 +15,10 @@ namespace OpenAI.Net.TextCompletions
         [JsonConverter(typeof(DateTimeOffsetJsonConverter))]
         public DateTimeOffset Created { get; set; }
 
-        public string Model { get; set; } = string.Empty;
+        public string Model { get; set; }
 
-        public List<Choice> Choices { get; set; } = new List<Choice>();
-
-        public Usage Usage { get; set; } = new Usage();
+        public List<T> Choices { get; set; } = new List<T>();
+        
+        public Usage Usage { get; set; }
     }
 }

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace OpenAI.Net.Models
 {
-    public class ApiResult
+    public class ModelResponse
     {
         public string Object { get; set; }
 
